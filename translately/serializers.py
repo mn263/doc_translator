@@ -16,12 +16,25 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    documents = serializers.HyperlinkedRelatedField(many=True, view_name='document-detail')
+    # pk = serializers.Field()  # Note: `Field` is an untyped read-only field.
+    # user_name = serializers.CharField(required=True, max_length=100)
+    # password = serializers.CharField(required=True, max_length=100)
+    #
+    # def restore_object(self, attrs, instance=None):
+    #     if instance:
+    #         instance.user_name = attrs.get('user_name', instance.user_name)
+    #         instance.password = attrs.get('password', instance.password)
+    #         return instance
+    #
+    #     # Create new instance
+    #     return Account(**attrs)
 
     class Meta:
-        model = Account
-        fields = ('user_name', 'documents')
-
+      model = Account
+      fields = (
+        'user_name',
+        'password'
+      )
 
 
 

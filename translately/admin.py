@@ -1,5 +1,5 @@
 from django.contrib import admin
-from translately.models import Account, Document
+from translately.models import Document
 
-admin.site.register(Account)
-admin.site.register(Document)
+# admin.site.register(Account)
+# admin.site.register(Document)

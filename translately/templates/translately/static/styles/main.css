@@ -14,10 +14,10 @@
 
 #main-area {
   max-width: 900px;
-  min-height: 500px;
+  /*min-height: 900px;*/
   margin: auto;
   text-align: center;
-  background-color: rgba(1, 182, 173, .2);
+  /*background-color: rgba(1, 182, 173, .2);*/
 }
 
 .file-img {
@@ -152,20 +152,41 @@ body {
     font-family: sans-serif;
 }
 
+#loading-icon {
+    z-index: 30000;
+    position: fixed;
+    /*width: 50%;*/
+    height: 30%;
+    top: 200px;
+    left: 200px;
+    background: center center no-repeat;
+    opacity: .5;
+}
+
 /*~~~~~~~~~~MASONRY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 .masonry {
-  background: #EEE;
+  /*background: #EEE;*/
   max-width: 640px;
   margin: auto;
 }
 
-.masonry .item {
-  width:  100px;
-  height: 100px;
-  float: left;
+.docIcon {
+  width:  150px;
+  height: 135px;
   background: lightgray;
   border: 2px solid #333;
   border-color: hsla(0, 0%, 0%, 0.5);
+}
+
+.wordIcon {
+  background: white;
+  border: 2px solid white;
+}
+
+.masonry .item {
+  float: left;
+  /*background: lightgray;*/
+  /*border: 2px solid #333;*/
   border-radius: 5px;
 }
 
@@ -202,26 +223,33 @@ button {
   box-shadow: 4px 4px 80px #000;
 }
 .ng-modal-dialog-content {
-  padding:10px;
+  padding:0;
   text-align: left;
 }
 .ng-modal-close {
   position: absolute;
   top: 3px;
   right: 5px;
-  padding: 5px;
+  padding: 0;
   cursor: pointer;
   font-size: 120%;
   display: inline-block;
   font-weight: bold;
-  font-family: 'arial', 'sans-serif';
+  font-family: 'arial', 'sans-serif',serif;
 }
 
 /*~~~~~~FILE UPLOAD~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
   #byte_content {
-    margin: 5px 0;
-    max-height: 100px;
-    overflow-y: auto;
-    overflow-x: hidden;
+      margin: 5px 0;
+      max-height: 100px;
+      overflow-y: auto;
+      overflow-x: hidden;
   }
-  #byte_range { margin-top: 5px; }
+#byte_range { margin-top: 5px; }
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+#signup-button:hover {
+    cursor: move;
+    text-decoration: underline;
+}
+

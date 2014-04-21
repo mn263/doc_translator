@@ -1,101 +1,140 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Translately</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width">
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
-  <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
-  <link href="http://fonts.googleapis.com/css?family=Cabin" rel="stylesheet" type="text/css">
-  {% load static %}
-  <script src="{% static 'scripts/controllers/main.js' %}"></script>
-  <script src="{% static 'scripts/masonry.pkgd.js' %}"></script>
-  <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">
+    <meta charset="utf-8">
+    <title>Translately</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
+    <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Cabin" rel="stylesheet" type="text/css">
+    {% load static %}
+    <script src="{% static 'scripts/controllers/main.js' %}"></script>
+    <script src="{% static 'scripts/masonry.pkgd.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">
 </head>
 
-<body ng-app="myApp">
-<div style="height: 60px; background-color: rgba(99, 130, 145, 1);">
-  <div style="float: left; min-width: 300px;">
-    <h1 id="site-name">Translately</h1>
-  </div>
-  <div style="float: right; min-width: 200px; padding-top: 20px;">
-    <ig-login></ig-login>
-  </div>
-</div>
-<div id="document-area">
-  <div id="main-area">
-    <p style="margin-top: 0; padding-top: 10px;">Sample Documents</p>
+<body data-ng-app="myApp">
+{% load static %}
+<img id="loading-icon" style="visibility: hidden;" src="{% static 'images/loading45.gif' %}">
 
-    <div data-ng-controller="FilesCtrl" id="file-section">
-      <button id="append-button">Append new items</button>
-      <div class="masonry">
-        <div class="item" data-ng-repeat="file in files">
-          {% load static %}
-          <img class="file-img" src="{% static 'images/Filetype-Document-icon.png' %}">
-          {% verbatim %}
-          <p class="file-desc">{{ file.name}}</p>
-          {% endverbatim %}
+<div data-ng-controller="FilesCtrl">
+
+    <div style="height: 60px; background-color: rgba(99, 130, 145, 1);">
+        <div style="float: left; min-width: 300px;">
+            <h1 id="site-name">Translately</h1>
         </div>
-      </div>
+        <div style="float: right; min-width: 200px; padding-top: 20px;">
+            <ig-login></ig-login>
+            <button style="visibility: hidden; float: none;" ng-click="signOut()" id="logout-button" class="btn">Logout</button>
+        </div>
+        <ig-signup></ig-signup>
+        <ig-document></ig-document>
     </div>
-  </div>
-  <div class="footer">
-    <p>♥ one BEAUTY and one GEEK</p>
-  </div>
+    <div id="document-area">
+        <div id="main-area">
+            <p style="margin-top: 0; padding-top: 10px;">User Documents</p>
+
+            <div id="file-section">
+                <input type="file" id="files" name="file"/>
+                <span class="readBytesButtons">
+                  <button ng-click="readFile()" style="height: 23px; font-size: small">Upload File</button>
+                </span>
+
+                <div class="masonry">
+                    <div class="item docIcon" data-ng-repeat="file in files">
+                        {% verbatim %}
+                        <div onclick="openDocModal()" ng-click="openFile( file )">
+                        {% endverbatim %}
+                            {% load static %}
+                            <img class="file-img" src="{% static 'images/Filetype-Document-icon.png' %}">
+                            {% verbatim %}
+                            <p class="file-desc">{{ file.title }}</p>
+                            {% endverbatim %}
+                        </div>
+                        <button style="font-size: smaller;" ng-click="deleteFile( file )">Delete File</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{#        <div class="footer">#}
+{#            <p>♥ one BEAUTY and one GEEK</p>#}
+{#        </div>#}
+    </div>
+{#    <button ng-click="deleteFile()">Remove File</button>#}
+
+
+    <modal-login show='loginShown' width='350px' height='40%'>
+        <div style="height: 60px; margin-bottom:40px; background-color: rgba(99, 130, 145, 1);">
+            <div style="float: left; min-width: 300px;">
+                <h1 id="site-name">Translately</h1>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <div style="margin-bottom: 10px;">
+                <label>Username: </label>
+                <input id="login-username" placeholder="Username" type="text" name="username" size="15"/><br/>
+            </div>
+            <div>
+                <label>Password: </label>
+                <input id="login-password" placeholder="Password" type="password" name="password" size="15"/><br/>
+            </div>
+            <div style="width: 50%; margin: auto;">
+                <div style="float: left;" onclick="signUp()" id="signup-button">
+                    <p style="color: rgb(99, 130, 145);">sign up</p>
+                </div>
+                <div style="float: right;"><button data-ng-click="login()">Login</button></div>
+            </div>
+        </div>
+    </modal-login>
+
+
+    <modal-signup show='signupShown' width='350px' height='50%'>
+        <div style="height: 60px; margin-bottom:40px; background-color: rgba(99, 130, 145, 1);">
+            <div style="float: left; min-width: 300px;">
+                <h1 id="site-name">Translately</h1>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <div style="margin-bottom: 10px; float: right; margin-right: 85px;">
+                <label>Email: </label>
+                <input id="signup-email" placeholder="email" type="text" name="email" size="15"/><br/>
+            </div>
+            <div style="margin-bottom: 10px; float: right; margin-right: 85px;">
+                <label>Username: </label>
+                <input id="signup-username" placeholder="username" type="text" name="username" size="15"/><br/>
+            </div>
+            <div style="margin-bottom: 10px; float: right; margin-right: 85px;">
+                <label>Password: </label>
+                <input id="signup-password" placeholder="password" type="password" name="password" size="15"/><br/>
+            </div>
+            <div style="float: right; margin-right: 85px;">
+                <label>Re-enter: </label>
+                <input id="signup-password-confirm" placeholder="confirm password" type="password" name="confirm password" size="15"/><br/>
+            </div>
+            <div style="width: 50%; margin: auto;">
+                <div style="float: right;"><button data-ng-click="signup()">Login</button></div>
+            </div>
+        </div>
+    </modal-signup>
+
+    <modal-document show='documentShown' width='350px' height='50%'>
+        <div style="height: 60px; margin-bottom:5px;">
+            <div style="float: left; min-width: 300px;">
+                {% verbatim %}
+                <h1 id="site-name" style="font-size: 25px; padding-left: 20px;">{{ Title }}</h1>
+                {% endverbatim %}
+            </div>
+        </div>
+        <div class="masonry">
+            <div class="item wordIcon" style="white-space: nowrap; height: 30px;" data-ng-repeat="word in Words track by $index">
+                {% verbatim %}
+                <p style="display: inline;" ng-click="translate( word )"> {{ word }} </p>
+                {% endverbatim %}
+            </div>
+        </div>
+    </modal-document>
 </div>
 
-
-<input type="file" id="files" name="file" /> Read bytes:
-<span class="readBytesButtons">
-  <button data-startbyte="0" data-endbyte="4">1-5</button>
-  <button data-startbyte="5" data-endbyte="14">6-15</button>
-  <button data-startbyte="6" data-endbyte="7">7-8</button>
-  <button>entire file</button>
-</span>
-<div id="byte_range"></div>
-<div id="byte_content"></div>
-
-<modal-dialog show='modalShown' width='350px' height='60%'>
-  <p>Login Form Will Go In Here <p>
-</modal-dialog>
-
-  <script>
-    function readBlob(opt_startByte, opt_stopByte) {
-
-      var files = document.getElementById('files').files;
-      if (!files.length) {
-        alert('Please select a file!');
-        return;
-      }
-
-      var file = files[0];
-      var start = parseInt(opt_startByte) || 0;
-      var stop = parseInt(opt_stopByte) || file.size - 1;
-
-      var reader = new FileReader();
-
-      // If we use onloadend, we need to check the readyState.
-      reader.onloadend = function(evt) {
-        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-          document.getElementById('byte_content').textContent = evt.target.result;
-          document.getElementById('byte_range').textContent =
-              ['Read bytes: ', start + 1, ' - ', stop + 1,
-               ' of ', file.size, ' byte file'].join('');
-        }
-      };
-
-      var blob = file.slice(start, stop + 1);
-      reader.readAsBinaryString(blob);
-    }
-
-    document.querySelector('.readBytesButtons').addEventListener('click', function(evt) {
-      if (evt.target.tagName.toLowerCase() == 'button') {
-        var startByte = evt.target.getAttribute('data-startbyte');
-        var endByte = evt.target.getAttribute('data-endbyte');
-        readBlob(startByte, endByte);
-      }
-    }, false);
-  </script>
 </body>
 </html>

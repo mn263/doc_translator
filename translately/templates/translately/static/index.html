@@ -8,15 +8,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Cabin" rel="stylesheet" type="text/css">
-    {% load static %}
-    <script src="{% static 'scripts/controllers/main.js' %}"></script>
-    <script src="{% static 'scripts/masonry.pkgd.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/main.css' %}">
+    <script src="http://0.0.0.0:8000/scripts/controllers/main.js"></script>
+    <script src="http://0.0.0.0:8000/scripts/masonry.pkgd.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://0.0.0.0:8000/styles/main.css">
 </head>
 
 <body data-ng-app="myApp">
-{% load static %}
-<img id="loading-icon" style="visibility: hidden;" src="{% static 'images/loading45.gif' %}">
+<img id="loading-icon" style="visibility: hidden;" src="http://0.0.0.0:8000/images/loading45.gif">
 
 <div data-ng-controller="FilesCtrl">
 
@@ -46,8 +44,7 @@
                         {% verbatim %}
                         <div onclick="openDocModal()" ng-click="openFile( file )">
                         {% endverbatim %}
-                            {% load static %}
-                            <img class="file-img" src="{% static 'images/Filetype-Document-icon.png' %}">
+                            <img class="file-img" src="http://0.0.0.0:8000/images/Filetype-Document-icon.png">
                             {% verbatim %}
                             <p class="file-desc">{{ file.title }}</p>
                             {% endverbatim %}

@@ -1,55 +1,48 @@
 API -- Usage:
 --------------
-
 ACCOUNTS:
 _________
 - Verify Account:
       api/user-auth/
-      *curl -X GET -d "username=username&password=password" http://127.0.0.1:8000/api/user-auth/
+      example: curl -X GET -d "username=<username>&password=<password>" http://162.243.254.94/api/user-auth/
 
 - Create Account:
       api/user-create/
-      example:  curl -X POST -d "username=createUser&email=user@example.com&password=password" http://127.0.0.1:8000/api/user-create/
-      revert:   curl -X DELETE -d "username=createUser&password=password" http://127.0.0.1:8000/api/user-delete/
+      example:  curl -X POST -d "username=<username>&email=<email>&password=<password>" http://162.243.254.94/api/user-create/
 
 - Delete Account:
       api/user-delete/
-      example:  curl -X DELETE -d "username=deleteUser&password=password" http://127.0.0.1:8000/api/user-delete/
-      revert:   curl -X POST -d "username=deleteUser&email=user@example.com&password=password" http://127.0.0.1:8000/api/user-create/
+      example:  curl -X DELETE -d "username=<username>&password=<password>" http://162.243.254.94/api/user-delete/
 
 - Change Account Username:
       api/user-update-username/
-      example:  curl -X PUT -d "username=username&new_username=new_username&password=password" http://127.0.0.1:8000/api/user-update-username/
-      revert:   curl -X PUT -d "username=new_username&new_username=username&password=password" http://127.0.0.1:8000/api/user-update-username/
+      example:  curl -X PUT -d "username=<username>&new_username=<new_username>&password=<password>" http://162.243.254.94/api/user-update-username/
 
 - Change Account Email:
       api/user-update-email/
-      example:  curl -X PUT -d "username=username&email=new_email@email.com&password=password" http://127.0.0.1:8000/api/user-update-email/
-      revert:   curl -X PUT -d "username=username&email=email@email.com&password=password" http://127.0.0.1:8000/api/user-update-email/
+      example:  curl -X PUT -d "username=<username>&email=<new_email>&password=<password>" http://162.243.254.94/api/user-update-email/
 
 - Change Account Password:
       api/user-update-password/
-      example:  curl -X PUT -d "username=username&password=password&new_password=new_password" http://127.0.0.1:8000/api/user-update-password/
-      revert:   curl -X PUT -d "username=username&password=new_password&new_password=password" http://127.0.0.1:8000/api/user-update-password/
-
-- Get Account Credentials:
-      api/get-account/user=<account_id>
-      example: curl -X GET http://127.0.0.1:8000/api/user-get/username=a/password=a?format=json
+      example:  curl -X PUT -d "username=<username>&password=<password>&new_password=<new_password>" http://162.243.254.94/api/user-update-password/
 
 
 DOCUMENTS:
 __________
 - Get Documents for Account:
       api/documents-get/username=<username>/password=<password>
-      example: curl -X GET http://127.0.0.1:8000/api/documents-get/username=a/password=a?format=json
+      example: curl -X GET http://162.243.254.94/api/documents-get/username=username/password=password?format=json
 
 - Add Document to Account:
       api/document-add/
-      example:  curl -X POST -H "Content-Type: application/json" -d '{"username":"username","password":"password","language":"Spanish","title":"My Title","text":"This is my lovely text that I will have to 'remove' double quotations from. :)"}' http://127.0.0.1:8000/api/document-add/
+      example:  curl -X POST -H "Content-Type: application/json" -d '{"username":"<username>","password":"<password>","language":"<Spanish>","title":"<title>","text":"<text>"}' http://162.243.254.94/api/document-add/
 
 - Remove Document from Account:
       api/document-delete/
-      example:  curl -X DELETE -d "username=username&password=password&document_id=1" http://127.0.0.1:8000/api/document-delete/
+      example:  curl -X DELETE -d "username=username&password=password&document_id=1" http://162.243.254.94/api/document-delete/
+
+
+
 
 
 

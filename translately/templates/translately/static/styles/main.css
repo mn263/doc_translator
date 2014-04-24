@@ -20,6 +20,10 @@
   /*background-color: rgba(1, 182, 173, .2);*/
 }
 
+.docIcon:hover {
+    cursor: pointer;
+}
+
 .file-img {
   height: 50px;
   width: 50px;
@@ -249,7 +253,15 @@ button {
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 #signup-button:hover {
-    cursor: move;
+    cursor: pointer;
     text-decoration: underline;
+}
+
+#delete-button:hover {
+    cursor: pointer;
+}
+
+.word-translate:hover {
+    cursor: pointer;
 }
 

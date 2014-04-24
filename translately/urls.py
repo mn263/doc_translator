@@ -15,7 +15,6 @@ urlpatterns = patterns('',
   url(r'^api/document-add/$', 'rest_framework_jwt.views.add_jwt_document'),
   url(r'^api/document-delete/$', 'rest_framework_jwt.views.remove_jwt_document'),
   url(r'^api/user-get-documents/$', 'rest_framework_jwt.views.change_jwt_password'),
-  # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'),),
 
   url(r'^$', views.index, name='index'),)
 urlpatterns = format_suffix_patterns(urlpatterns)

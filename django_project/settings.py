@@ -88,6 +88,8 @@ STATICFILES_DIRS = (
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, "translately/templates/translately/static/")
+
 MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
 
 MEDIA_URL = '/media/'

@@ -54,6 +54,7 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
         document.getElementById('logout-button').style.visibility = "hidden";
         document.getElementById('login-username').value = "";
         document.getElementById('login-password').value = "";
+        document.getElementById('delete-button').style.visibility = "hidden";
         $scope.files = [ ];
     };
 
@@ -72,14 +73,25 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
                 $scope.$$childHead.hideModalLogin();
                 document.getElementById('login-button').style.visibility = "hidden";
                 document.getElementById('logout-button').style.visibility = "visible";
+                document.getElementById('delete-button').style.visibility = "visible";
 //                Get all of the person's documents
                 $scope.loadDocuments();
 
             } else {
                 alert("Invalid Login credentials.")
             }
-        }).error( function() {
-            alert("ERROR -- Check your credentials");
+        }).error( function(data) {
+            if(data.detail == "Method 'POST' not allowed."){
+//                Close modal window
+                $scope.$$childHead.hideModalLogin();
+                document.getElementById('login-button').style.visibility = "hidden";
+                document.getElementById('logout-button').style.visibility = "visible";
+                document.getElementById('delete-button').style.visibility = "visible";
+//                Get all of the person's documents
+                $scope.loadDocuments();
+            } else {
+                alert("ERROR -- Check your credentials");
+            }
         });
     };
 
@@ -112,11 +124,40 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
             } else {
                 alert("Invalid Login credentials.")
             }
-        }).error( function() {
-            alert("ERROR -- Are you using a valid email?");
+        }).error( function(data) {
+            if(data.detail == "Method 'POST' not allowed."){
+//                Close modal window
+                $scope.$$childHead.hideModalLogin();
+                document.getElementById('login-button').style.visibility = "hidden";
+                document.getElementById('logout-button').style.visibility = "visible";
+//                Get all of the person's documents
+                $scope.loadDocuments();
+            } else {
+                alert("ERROR -- Check your credentials");
+            }
         });
     };
 
+    $scope.deleteAccount = function () {
+        var r=confirm("Are you sure you want to delete your account?");
+        if (r==false) {
+            return;
+        }
+        var username = document.getElementById('login-username').value;
+        var password = document.getElementById('login-password').value;
+        var api = "api/user-delete/";
+        $http({
+            method: 'DELETE',
+            url: api,
+            data: JSON.stringify({ username : username , password : password}),
+            headers: {'Content-type': 'application/json'}
+        }).success( function( data ) {
+            $scope.signOut();
+        }).error( function() {
+            alert("ERROR -- Unable to delete account. \nYou will be signed out.");
+            $scope.signOut();
+        });
+    };
 
     $scope.loadDocuments = function() {
         var username = document.getElementById('login-username').value;
@@ -132,12 +173,14 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
             for (var i = 0; i < data.length; i++) {
                 var title = data[i].title;
                 var text = data[i].text;
+                var language = data[i].language;
                 var id = data[i].id;
-                var doc = {id: id, title: title, text: text};
+                var doc = {id: id, language: language, title: title, text: text};
                 $scope.files.push(doc);
             }
         }).error( function() {
-            alert("ERROR -- Are you logged in?");
+            $scope.signOut();
+            alert("ERROR -- Invalid credentials have been provided");
         });
     };
 
@@ -159,7 +202,8 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
             $scope.loadDocuments();
         }).error( function() {
             alert("ERROR -- Are you logged in?");
-        });    };
+        });
+    };
 
 
     $scope.saveDocument = function(title, doc) {
@@ -180,9 +224,19 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
 
 
     function readBlob(opt_startByte, opt_stopByte) {
-//        var spinner = document.getElementById('loading-icon');
-//        spinner.style.visibility = "visible";
-
+        var language = "English";
+        if(document.getElementById('english-button').checked == true) {
+            var r=confirm("Is English OK?");
+            if(r==false){
+                return;
+            }
+        } else if (document.getElementById('spanish-button').checked == true) {
+            r=confirm("Is Spanish OK?");
+            if(r==false){
+                return;
+            }
+            language = "Spanish";
+        }
         var files = document.getElementById('files').files;
         if (!files.length) {
             alert('No file selected!');
@@ -202,8 +256,6 @@ myApp.controller('FilesCtrl', function ($scope, $http) {//, $timeout, $route, $l
 
         var blob = file.slice(start, stop + 1);
         reader.readAsBinaryString(blob);
-//        spinner.style.visibility = "hidden";
-
     }
 
     $scope.readFile = function () {
@@ -316,8 +368,6 @@ myApp.directive('modalSignup', function () {
     };
 });
 
-
-
 myApp.directive('modalDocument', function () {
     return {
         restrict: 'E',
@@ -349,5 +399,3 @@ function signUp() {
 function openDocModal() {
     document.getElementById('document-button-hidden').click();
 }
-
-

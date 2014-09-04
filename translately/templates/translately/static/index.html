@@ -8,13 +8,13 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
     <link href="http://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
     <link href="http://fonts.googleapis.com/css?family=Cabin" rel="stylesheet" type="text/css">
-    <script src="http://162.243.254.94:8000/scripts/controllers/main.js"></script>
-    <script src="http://162.243.254.94:8000/scripts/masonry.pkgd.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://162.243.254.94:8000/styles/main.css">
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/masonry.pkgd.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 
 <body data-ng-app="myApp">
-<img id="loading-icon" style="visibility: hidden;" src="http://162.243.254.94:8000/images/loading45.gif">
+<img id="loading-icon" style="visibility: hidden;" src="images/loading45.gif">
 
 <div data-ng-controller="FilesCtrl">
 
@@ -34,8 +34,13 @@
             <p style="margin-top: 0; padding-top: 10px;">User Documents</p>
 
             <div id="file-section">
+
+                <label for="english-button"></label>
                 <input type="radio" id="english-button" name="group1" value="English" checked> English<br>
+
+                <label for="spanish-button"></label>
                 <input style="margin-left: 10px;" id="spanish-button" type="radio" name="group1" value="Spanish"> Spanish<br>
+
                 <input type="file" id="files" name="file"/>
                 <span class="readBytesButtons">
                   <button ng-click="readFile()" style="height: 23px; font-size: small">Upload File</button>
@@ -43,13 +48,9 @@
 
                 <div class="masonry">
                     <div class="item docIcon" data-ng-repeat="file in files">
-                        {% verbatim %}
                         <div onclick="openDocModal()" ng-click="openFile( file )">
-                        {% endverbatim %}
-                            <img class="file-img" src="http://162.243.254.94:8000/images/Filetype-Document-icon.png">
-                            {% verbatim %}
+                            <img class="file-img" src="images/Filetype-Document-icon.png">
                             <p class="file-desc">{{ file.title }}</p>
-                            {% endverbatim %}
                         </div>
                         <button style="font-size: smaller;" ng-click="deleteFile( file )">Delete File</button>
                     </div>
@@ -115,16 +116,12 @@
     <modal-document show='documentShown' width='350px' height='50%'>
         <div style="height: 60px; margin-bottom:5px;">
             <div style="float: left; min-width: 300px;">
-                {% verbatim %}
                 <h1 id="site-name" style="font-size: 25px; padding-left: 20px;">{{ Title }}</h1>
-                {% endverbatim %}
             </div>
         </div>
         <div class="masonry">
             <div class="item wordIcon" style="white-space: nowrap; height: 30px;" data-ng-repeat="word in Words track by $index">
-                {% verbatim %}
                 <p class="word-translate" style="display: inline;" ng-click="translate( word )"> {{ word }} </p>
-                {% endverbatim %}
             </div>
         </div>
     </modal-document>

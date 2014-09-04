@@ -79,20 +79,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-# SITE_ROOT = os.path.dirname(os.chdir.realpath(__file__))
-STATICFILES_DIRS = (
-  os.path.join(BASE_DIR, 'translately/templates/translately/static/'),
-)
-
 STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, "translately/templates/translately/static/")
-
-MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media')
-
-MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
